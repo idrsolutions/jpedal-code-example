@@ -1,37 +1,48 @@
+import org.jpedal.examples.JPedal;
+import org.jpedal.examples.PdfUtilities;
 import org.jpedal.examples.images.ConvertPagesToImages;
 import org.jpedal.examples.images.ExtractClippedImages;
+import org.jpedal.examples.printing.PrintPdfPages;
 import org.jpedal.examples.text.ExtractTextAsWordlist;
+import org.jpedal.examples.text.ExtractTextInRectangle;
 import org.jpedal.examples.viewer.Viewer;
 import org.jpedal.exception.PdfException;
+import org.jpedal.parser.DecoderOptions;
+import org.jpedal.utils.LogWriter;
 
+import javax.print.PrintException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
 
-public class JPedalExamples {
-    public static void main(String[] args) {
+public final class JpedalExamples {
+    private JpedalExamples() {
+    }
+
+    public static void main(final String[] args) {
         try {
-            pdfToImage();
-//            pdfViewer();
-//            extractWords();
-//            extractImages();
+            convertPdfPagesToImages();
+//            extractImagesFromPDF();
+//            extractTextAsWordList();
+//            openPdfViewer();
+//            printPdfPages();
+//            extractMetaDataFromPdf();
+//            extractTextFromPages();
         } catch (final Exception e) {
-            e.printStackTrace();
+            LogWriter.writeLog(Level.SEVERE, null, "Failed to run example");
         }
     }
 
-    public static void pdfToImage() throws PdfException {
-        ConvertPagesToImages.writeAllPagesAsImagesToDir("/path/to/input.pdf",
-                "/path/to/output/", "png", 1.33f);
-    }
+    public static void openPdfViewer() {
+        final JFrame frame = new JFrame();
+        final JPanel rootContainer = new JPanel();
 
-    public static void pdfViewer() {
-        JFrame frame = new JFrame();
-        JPanel rootContainer = new JPanel();
-
-        Viewer viewer = new Viewer(rootContainer,null);
+        final Viewer viewer = new Viewer(rootContainer,null);
         viewer.setupViewer();
 
         frame.add(rootContainer, BorderLayout.CENTER);
@@ -41,26 +52,158 @@ public class JPedalExamples {
         frame.setVisible(true);
     }
 
-    public static void extractWords() throws PdfException {
-        List<String> wordList = new ArrayList<String>();
-        ExtractTextAsWordlist extract = new ExtractTextAsWordlist("/path/to/input.pdf");
+    public static void extractTextAsWordList() throws PdfException {
+        
+        final String password = null;
+        final String inputFilename = "/path/to/input.pdf";
 
-        if (extract.openPDFFile()) {
-            int pageCount = extract.getPageCount();
-            for (int page = 1; page <= pageCount; page++) {
-
-                wordList = extract.getWordsOnPage(page);
-            }
+        final ExtractTextAsWordlist extract = new ExtractTextAsWordlist(inputFilename);
+        if (password != null) {
+            extract.setPassword(password);
         }
 
-        // Do something with wordList here
-        wordList.forEach(System.out::println);
+        if (extract.openPDFFile()) {
+            List<String> wordList = new ArrayList<>();
+            final int pageCount = extract.getPageCount();
+            for (int page = 1; page <= pageCount; page++) {
+                wordList = extract.getWordsOnPage(page);
+            }
+            // Do something with wordList here
+            wordList.forEach(System.out::println);
+        } else {
+            LogWriter.writeLog(Level.SEVERE, null, "Unable to open file.");
+        }
+
 
         extract.closePDFfile();
     }
 
-    public static void extractImages() throws PdfException {
+    public static void extractTextFromPages() throws PdfException {
+
+        final String password = null;
+        final String inputFilename = "/path/to/input.pdf";
+
+
+        final ExtractTextInRectangle extract = new ExtractTextInRectangle(inputFilename);
+        if (password != null) {
+            extract.setPassword(password);
+        }
+
+        if (extract.openPDFFile()) {
+            final StringBuilder text = new StringBuilder();
+            final int pageCount = extract.getPageCount();
+            for (int page = 1; page <= pageCount; page++) {
+                text.append(extract.getTextOnPage(page)).append('\n');
+            }
+            // Do something with wordList here
+            System.out.println(text);
+        } else {
+            LogWriter.writeLog(Level.SEVERE, null, "Unable to open file.");
+        }
+
+
+        extract.closePDFfile();
+    }
+
+    public static void extractImagesFromPDF() throws PdfException {
         ExtractClippedImages.writeAllClippedImagesToDirs("/path/to/input.pdf",
                 "/path/to/output/", "png", new String[]{"100","fixedHeight"});
+    }
+
+    public static void convertPdfPagesToImages() throws PdfException {
+
+        //Simple static method
+        //ConvertPagesToImages.writeAllPagesAsImagesToDir("/path/to/input.pdf", "/path/to/output/", "png", 1.0f);
+
+        final float pageScaling = 1.0f;
+        final String password = null;
+        final String inputFilename = "/path/to/input.pdf";
+
+        final ConvertPagesToImages convert = new ConvertPagesToImages(inputFilename);
+        if (password != null) {
+            convert.setPassword(password);
+        }
+
+        if (convert.openPDFFile()) {
+            convert.setPageScaling(pageScaling);
+            final int pageCount = convert.getPageCount();
+            for (int page = 1; page <= pageCount; page++) {
+                final BufferedImage image = convert.getPageAsImage(page);
+            }
+            convert.closePDFfile();
+        } else {
+            LogWriter.writeLog(Level.SEVERE, null, "Unable to open file.");
+        }
+    }
+
+    public static void printPdfPages() throws PdfException, PrintException {
+
+        final String printerName = "printerName";
+        final String password = null;
+        final String inputFilename = "/path/to/input.pdf";
+
+        final PrintPdfPages print = new PrintPdfPages(inputFilename);
+        if (password != null) {
+            print.setPassword(password);
+        }
+
+        if (print.openPDFFile()) {
+            final int pageCount = print.getPageCount();
+            for (int page = 1; page <= pageCount; page++) {
+                print.printPage(printerName, page);
+            }
+            print.closePDFfile(DecoderOptions.isRunningOnWindows);
+        } else {
+            LogWriter.writeLog(Level.SEVERE, null, "Unable to open file.");
+        }
+    }
+
+    public static void extractMetaDataFromPdf() throws PdfException {
+        final String password = null;
+        final String inputFilename = "/path/to/input.pdf";
+
+
+        final PdfUtilities extract = new PdfUtilities(inputFilename);
+        if (password != null) {
+            extract.setPassword(password);
+        }
+
+        if (extract.openPDFFile()) {
+            final String[] dataTypes = {"fields", "xml", "pagesizes", "outline", "fonts", "pagecount"};
+            final StringBuilder text = new StringBuilder();
+            for (final String dataType : dataTypes) {
+
+                switch (dataType.toLowerCase()) {
+                    case "fields":
+                        text.append("Fields\n").append(JPedal.getMetadataFields(extract));
+                        break;
+                    case "xml":
+                        text.append("XML\n").append(JPedal.getXML(extract));
+                        break;
+                    case "pagesizes":
+                        text.append("PageSizes\n").append(Arrays.toString(JPedal.getPageSizes(extract)));
+                        break;
+                    case "outline":
+                        text.append("Outline\n").append(Arrays.toString(JPedal.getOutline(inputFilename)));
+                        break;
+                    case "fonts":
+                        text.append("FontsPerPage\n").append(JPedal.getFonts(extract));
+                        break;
+                    case "xobjects":
+                        text.append("XObjectsPerPage\n").append(JPedal.getXObjects(extract));
+                        break;
+                    case "pagecount":
+                        text.append("PageCount\n").append(extract.getPageCount());
+                        break;
+                }
+            }
+            // Do something with wordList here
+            System.out.println(text);
+        } else {
+            LogWriter.writeLog(Level.SEVERE, null, "Unable to open file.");
+        }
+
+
+        extract.closePDFfile();
     }
 }
