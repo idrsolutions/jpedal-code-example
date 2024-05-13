@@ -55,7 +55,11 @@ public final class JpedalExamples {
     }
 
     public static void extractWordListFromPages() throws PdfException {
-        
+
+        //Simple static method to output all pages text as a wordlist to the specified directory
+//        ExtractTextAsWordlist.writeAllWordlistsToDir("/path/to/input.pdf", "password_or_null", "/path/to/outputDir", -1);
+
+        //Extract text as a wordlist with more control, the words can be handled one page at a time
         final String password = null;
         final String inputFilename = "/path/to/input.pdf";
 
@@ -82,6 +86,10 @@ public final class JpedalExamples {
 
     public static void extractTextFromPages() throws PdfException {
 
+        //Simple static method to output all pages text to the specified directory
+//        ExtractTextInRectangle.writeAllTextToDir("/path/to/input.pdf", "password_or_null", "/path/to/outputDir", -1);
+
+        //Extract test with more control, the text can be handled one page at a time
         final String password = null;
         final String inputFilename = "/path/to/input.pdf";
 
@@ -108,9 +116,12 @@ public final class JpedalExamples {
     }
 
     public static void extractImagesFromPDF() throws PdfException {
-        ExtractImages.writeAllImagesToDir("/path/to/input.pdf",
-                "/path/to/output/", "png", true, true);
 
+        //Simple static method to output all images to a directory
+//        ExtractImages.writeAllImagesToDir("/path/to/input.pdf",
+//                "/path/to/output/", "png", true, true);
+
+        //Image extraction with more control, you can use the images as they are retrieved
         final String password = null;
         final String inputFilename = "/path/to/input.pdf";
         final boolean outputImageAsDisplayedOnPage = false;
@@ -138,9 +149,12 @@ public final class JpedalExamples {
     }
 
     public static void extractClippedImagesFromPDF() throws PdfException {
-        ExtractClippedImages.writeAllClippedImagesToDirs("/path/to/input.pdf",
-                "/path/to/output/", "png", new String[]{"100","fixedHeight"});
 
+        //Simple static method to output all images to a directory
+//        ExtractClippedImages.writeAllClippedImagesToDirs("/path/to/input.pdf",
+//                "/path/to/output/", "png", new String[]{"100","fixedHeight"});
+
+        //Clipped image extraction with more control, you can use the images as they are retrieved
         final String password = null;
         final String inputFilename = "/path/to/input.pdf";
 
@@ -168,9 +182,10 @@ public final class JpedalExamples {
 
     public static void convertPdfPagesToImages() throws PdfException {
 
-        //Simple static method
-        //ConvertPagesToImages.writeAllPagesAsImagesToDir("/path/to/input.pdf", "/path/to/output/", "png", 1.0f);
+        //Simple static method to output all pages as image to a directory
+//        ConvertPagesToImages.writeAllPagesAsImagesToDir("/path/to/input.pdf", "/path/to/output/", "png", 1.0f);
 
+        //Page to Image conversion with more control, you can use the images as the pages are converted
         final float pageScaling = 1.0f;
         final String password = null;
         final String inputFilename = "/path/to/input.pdf";
@@ -194,6 +209,10 @@ public final class JpedalExamples {
 
     public static void printPdfPages() throws PdfException, PrintException {
 
+        //Simple static method to print all pages in the given PDF using the specified printer
+//        PrintPdfPages.printPDF("/path/to/input.pdf", "PrinterName");
+
+        //Print PDF file with more control b y specifying a print range, in this example each page is printed separately
         final String printerName = "printerName";
         final String password = null;
         final String inputFilename = "/path/to/input.pdf";
@@ -215,6 +234,11 @@ public final class JpedalExamples {
     }
 
     public static void extractMetaDataFromPdf() throws PdfException {
+
+        //Simple static method to output all metadata to the console.
+//        JpedalExamples.extractMetaDataFromPdf();
+
+        //Output metadata with more control, such as limiting the data types and handling the data separately
         final String password = null;
         final String inputFilename = "/path/to/input.pdf";
 
