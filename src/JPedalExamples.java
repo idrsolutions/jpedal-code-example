@@ -2,6 +2,7 @@ import org.jpedal.examples.JPedal;
 import org.jpedal.examples.PdfUtilities;
 import org.jpedal.examples.images.ConvertPagesToImages;
 import org.jpedal.examples.images.ExtractClippedImages;
+import org.jpedal.examples.images.ExtractImages;
 import org.jpedal.examples.printing.PrintPdfPages;
 import org.jpedal.examples.text.ExtractTextAsWordlist;
 import org.jpedal.examples.text.ExtractTextInRectangle;
@@ -27,14 +28,15 @@ public final class JpedalExamples {
     public static void main(final String[] args) {
         try {
             convertPdfPagesToImages();
+//            extractClippedImagesFromPDF();
 //            extractImagesFromPDF();
-//            extractTextAsWordList();
 //            openPdfViewer();
 //            printPdfPages();
 //            extractMetaDataFromPdf();
 //            extractTextFromPages();
+//            extractWordListFromPages();
         } catch (final Exception e) {
-            LogWriter.writeLog(Level.SEVERE, null, "Failed to run example");
+            LogWriter.writeLog("Failed to run example");
         }
     }
 
@@ -52,7 +54,7 @@ public final class JpedalExamples {
         frame.setVisible(true);
     }
 
-    public static void extractTextAsWordList() throws PdfException {
+    public static void extractWordListFromPages() throws PdfException {
         
         final String password = null;
         final String inputFilename = "/path/to/input.pdf";
@@ -71,7 +73,7 @@ public final class JpedalExamples {
             // Do something with wordList here
             wordList.forEach(System.out::println);
         } else {
-            LogWriter.writeLog(Level.SEVERE, null, "Unable to open file.");
+            LogWriter.writeLog("Unable to open file.");
         }
 
 
@@ -98,7 +100,7 @@ public final class JpedalExamples {
             // Do something with wordList here
             System.out.println(text);
         } else {
-            LogWriter.writeLog(Level.SEVERE, null, "Unable to open file.");
+            LogWriter.writeLog("Unable to open file.");
         }
 
 
@@ -106,8 +108,62 @@ public final class JpedalExamples {
     }
 
     public static void extractImagesFromPDF() throws PdfException {
+        ExtractImages.writeAllImagesToDir("/path/to/input.pdf",
+                "/path/to/output/", "png", true, true);
+
+        final String password = null;
+        final String inputFilename = "/path/to/input.pdf";
+        final boolean outputImageAsDisplayedOnPage = false;
+
+        ExtractImages extract = new ExtractImages(inputFilename);
+        if (password != null) {
+            extract.setPassword(password);
+        }
+
+        if (extract.openPDFFile()) {
+            final int pageCount = extract.getPageCount();
+            for (int page = 1; page <= pageCount; page++) {
+                final int imageCount = extract.getImageCount(page);
+                for (int image = 1; image <= imageCount; image++) {
+                    final BufferedImage imageFromPage = extract.getImage(page, image, outputImageAsDisplayedOnPage);
+                    // Do something with wordList here
+                }
+            }
+        } else {
+            LogWriter.writeLog("Unable to open file.");
+        }
+
+
+        extract.closePDFfile();
+    }
+
+    public static void extractClippedImagesFromPDF() throws PdfException {
         ExtractClippedImages.writeAllClippedImagesToDirs("/path/to/input.pdf",
                 "/path/to/output/", "png", new String[]{"100","fixedHeight"});
+
+        final String password = null;
+        final String inputFilename = "/path/to/input.pdf";
+
+        ExtractClippedImages extract = new ExtractClippedImages(inputFilename);
+        if (password != null) {
+            extract.setPassword(password);
+        }
+
+        if (extract.openPDFFile()) {
+            final int pageCount = extract.getPageCount();
+            for (int page = 1; page <= pageCount; page++) {
+                final int imageCount = extract.getImageCount(page);
+                for (int image = 1; image <= imageCount; image++) {
+                    final BufferedImage clippledImage = extract.getClippedImage(page, image);
+                    // Do something with wordList here
+                }
+            }
+        } else {
+            LogWriter.writeLog("Unable to open file.");
+        }
+
+
+        extract.closePDFfile();
     }
 
     public static void convertPdfPagesToImages() throws PdfException {
@@ -132,7 +188,7 @@ public final class JpedalExamples {
             }
             convert.closePDFfile();
         } else {
-            LogWriter.writeLog(Level.SEVERE, null, "Unable to open file.");
+            LogWriter.writeLog("Unable to open file.");
         }
     }
 
@@ -154,7 +210,7 @@ public final class JpedalExamples {
             }
             print.closePDFfile(DecoderOptions.isRunningOnWindows);
         } else {
-            LogWriter.writeLog(Level.SEVERE, null, "Unable to open file.");
+            LogWriter.writeLog("Unable to open file.");
         }
     }
 
@@ -200,7 +256,7 @@ public final class JpedalExamples {
             // Do something with wordList here
             System.out.println(text);
         } else {
-            LogWriter.writeLog(Level.SEVERE, null, "Unable to open file.");
+            LogWriter.writeLog("Unable to open file.");
         }
 
 
