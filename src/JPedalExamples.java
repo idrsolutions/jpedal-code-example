@@ -28,13 +28,13 @@ public final class JpedalExamples {
     public static void main(final String[] args) {
         try {
             convertPdfPagesToImages();
-//            extractClippedImagesFromPDF();
-//            extractImagesFromPDF();
-//            openPdfViewer();
-//            printPdfPages();
-//            extractMetaDataFromPdf();
-//            extractTextFromPages();
-//            extractWordListFromPages();
+            // extractClippedImagesFromPDF();
+            // extractImagesFromPDF();
+            // openPdfViewer();
+            // printPdfPages();
+            // extractMetaDataFromPdf();
+            // extractTextFromPages();
+            // extractWordListFromPages();
         } catch (final Exception e) {
             LogWriter.writeLog("Failed to run example");
         }
@@ -56,10 +56,10 @@ public final class JpedalExamples {
 
     public static void extractWordListFromPages() throws PdfException {
 
-        //Simple static method to output all pages text as a wordlist to the specified directory
-//        ExtractTextAsWordlist.writeAllWordlistsToDir("/path/to/input.pdf", "password_or_null", "/path/to/outputDir", -1);
+        // Simple static method to output all pages text as a wordlist to the specified directory
+        // ExtractTextAsWordlist.writeAllWordlistsToDir("/path/to/input.pdf", "password_or_null", "/path/to/outputDir", -1);
 
-        //Extract text as a wordlist with more control, the words can be handled one page at a time
+        // Extract text as a wordlist with more control, the words can be handled one page at a time
         final String password = null;
         final String inputFilename = "/path/to/input.pdf";
 
@@ -74,6 +74,7 @@ public final class JpedalExamples {
             for (int page = 1; page <= pageCount; page++) {
                 wordList = extract.getWordsOnPage(page);
             }
+            
             // Do something with wordList here
             wordList.forEach(System.out::println);
         } else {
@@ -86,10 +87,10 @@ public final class JpedalExamples {
 
     public static void extractTextFromPages() throws PdfException {
 
-        //Simple static method to output all pages text to the specified directory
-//        ExtractTextInRectangle.writeAllTextToDir("/path/to/input.pdf", "password_or_null", "/path/to/outputDir", -1);
+        // Simple static method to output all pages text to the specified directory
+        // ExtractTextInRectangle.writeAllTextToDir("/path/to/input.pdf", "password_or_null", "/path/to/outputDir", -1);
 
-        //Extract test with more control, the text can be handled one page at a time
+        // Extract test with more control, the text can be handled one page at a time
         final String password = null;
         final String inputFilename = "/path/to/input.pdf";
 
@@ -105,23 +106,22 @@ public final class JpedalExamples {
             for (int page = 1; page <= pageCount; page++) {
                 text.append(extract.getTextOnPage(page)).append('\n');
             }
+            
             // Do something with wordList here
             System.out.println(text);
         } else {
             LogWriter.writeLog("Unable to open file.");
         }
-
-
+        
         extract.closePDFfile();
     }
 
     public static void extractImagesFromPDF() throws PdfException {
 
-        //Simple static method to output all images to a directory
-//        ExtractImages.writeAllImagesToDir("/path/to/input.pdf",
-//                "/path/to/output/", "png", true, true);
+        // Simple static method to output all images to a directory
+        // ExtractImages.writeAllImagesToDir("/path/to/input.pdf", "/path/to/output/", "png", true, true);
 
-        //Image extraction with more control, you can use the images as they are retrieved
+        // Image extraction with more control, you can use the images as they are retrieved
         final String password = null;
         final String inputFilename = "/path/to/input.pdf";
         final boolean outputImageAsDisplayedOnPage = false;
@@ -137,6 +137,7 @@ public final class JpedalExamples {
                 final int imageCount = extract.getImageCount(page);
                 for (int image = 1; image <= imageCount; image++) {
                     final BufferedImage imageFromPage = extract.getImage(page, image, outputImageAsDisplayedOnPage);
+                    
                     // Do something with wordList here
                 }
             }
@@ -150,11 +151,10 @@ public final class JpedalExamples {
 
     public static void extractClippedImagesFromPDF() throws PdfException {
 
-        //Simple static method to output all images to a directory
-//        ExtractClippedImages.writeAllClippedImagesToDirs("/path/to/input.pdf",
-//                "/path/to/output/", "png", new String[]{"100","fixedHeight"});
+        // Simple static method to output all images to a directory
+        // ExtractClippedImages.writeAllClippedImagesToDirs("/path/to/input.pdf", "/path/to/output/", "png", new String[]{"100","fixedHeight"});
 
-        //Clipped image extraction with more control, you can use the images as they are retrieved
+        // Clipped image extraction with more control, you can use the images as they are retrieved
         final String password = null;
         final String inputFilename = "/path/to/input.pdf";
 
@@ -169,6 +169,7 @@ public final class JpedalExamples {
                 final int imageCount = extract.getImageCount(page);
                 for (int image = 1; image <= imageCount; image++) {
                     final BufferedImage clippledImage = extract.getClippedImage(page, image);
+                    
                     // Do something with wordList here
                 }
             }
@@ -182,10 +183,10 @@ public final class JpedalExamples {
 
     public static void convertPdfPagesToImages() throws PdfException {
 
-        //Simple static method to output all pages as image to a directory
-//        ConvertPagesToImages.writeAllPagesAsImagesToDir("/path/to/input.pdf", "/path/to/output/", "png", 1.0f);
+        // Simple static method to output all pages as image to a directory
+        // ConvertPagesToImages.writeAllPagesAsImagesToDir("/path/to/input.pdf", "/path/to/output/", "png", 1.0f);
 
-        //Page to Image conversion with more control, you can use the images as the pages are converted
+        // Page to Image conversion with more control, you can use the images as the pages are converted
         final float pageScaling = 1.0f;
         final String password = null;
         final String inputFilename = "/path/to/input.pdf";
@@ -200,6 +201,8 @@ public final class JpedalExamples {
             final int pageCount = convert.getPageCount();
             for (int page = 1; page <= pageCount; page++) {
                 final BufferedImage image = convert.getPageAsImage(page);
+                
+                // Do something with image here
             }
             convert.closePDFfile();
         } else {
@@ -209,10 +212,10 @@ public final class JpedalExamples {
 
     public static void printPdfPages() throws PdfException, PrintException {
 
-        //Simple static method to print all pages in the given PDF using the specified printer
-//        PrintPdfPages.printPDF("/path/to/input.pdf", "PrinterName");
+        // Simple static method to print all pages in the given PDF using the specified printer
+        // PrintPdfPages.printPDF("/path/to/input.pdf", "PrinterName");
 
-        //Print PDF file with more control b y specifying a print range, in this example each page is printed separately
+        // Print PDF file with more control b y specifying a print range, in this example each page is printed separately
         final String printerName = "printerName";
         final String password = null;
         final String inputFilename = "/path/to/input.pdf";
@@ -235,10 +238,10 @@ public final class JpedalExamples {
 
     public static void extractMetaDataFromPdf() throws PdfException {
 
-        //Simple static method to output all metadata to the console.
-//        JpedalExamples.extractMetaDataFromPdf();
+        // Simple static method to output all metadata to the console.
+        // JpedalExamples.extractMetaDataFromPdf();
 
-        //Output metadata with more control, such as limiting the data types and handling the data separately
+        // Output metadata with more control, such as limiting the data types and handling the data separately
         final String password = null;
         final String inputFilename = "/path/to/input.pdf";
 
@@ -277,13 +280,13 @@ public final class JpedalExamples {
                         break;
                 }
             }
+            
             // Do something with wordList here
             System.out.println(text);
         } else {
             LogWriter.writeLog("Unable to open file.");
         }
-
-
+        
         extract.closePDFfile();
     }
 }
