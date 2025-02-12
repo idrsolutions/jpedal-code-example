@@ -33,7 +33,7 @@ Method in JPedalExamples.java: `extractMetaDataFromPdf();`<br />
 
 ## PDF Text
 Method in JPedalExamples.java: `extractTextFromPages();`<br />
-[Extract words on a page from any PDF file](https://support.idrsolutions.com/jpedal/tutorials/extract-text/extract-words-on-a-page-from-any-pdf-file)
+[Extract words on a page from any PDF file](https://support.idrsolutions.com/jpedal/tutorials/extract-text/extract-unstructured-text-with-a-rectangle-from-pdf-files)
 
 Method in JPedalExamples.java: `extractWordListFromPages();`<br />
 [Extract words on a page from any PDF file](https://support.idrsolutions.com/jpedal/tutorials/extract-text/extract-words-on-a-page-from-any-pdf-file)
