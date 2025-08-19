@@ -10,6 +10,7 @@ import org.jpedal.examples.viewer.Viewer;
 import org.jpedal.exception.PdfException;
 import org.jpedal.manipulator.PdfManipulator;
 import org.jpedal.parser.DecoderOptions;
+import org.jpedal.tools.PdfOptimizer;
 import org.jpedal.utils.LogWriter;
 
 import javax.print.PrintException;
@@ -30,7 +31,8 @@ public final class JpedalExamples {
 
     public static void main(final String[] args) {
         try {
-            splitOnePdf();
+            optiimzePdf();
+            // splitOnePdf();
             // convertPdfPagesToImages();
             // extractClippedImagesFromPDF();
             // extractImagesFromPDF();
@@ -304,5 +306,14 @@ public final class JpedalExamples {
         final String outputFolder = "outputFolder";
 
         PdfManipulator.splitInHalf(new File(inputFile), new File(outputFolder), pageToSplitAt);
+    }
+
+    public static void optiimzePdf() throws IOException {
+        // Simple static method to optimize a PDF file with all default optimizations
+
+        final String inputFile = "inputFile.pdf";
+        final String outputFile = "outputFile.pdf";
+
+        PdfOptimizer.optimizePDF(new File(inputFile), new File(outputFile));
     }
 }

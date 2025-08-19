@@ -41,3 +41,7 @@ Method in JPedalExamples.java: `extractWordListFromPages();`<br />
 ## PDF Manipulating
 Method in JPedalExamples.java: `splitOnePdf();`<br />
 [Split pages from PDF](https://support.idrsolutions.com/jpedal/tutorials/pdf-manipulation/split-pages-from-pdf)
+
+## PDF Optimizing
+Method in JPedalExamples.java: `optiimzePdf();`<br />
+[Optimize PDF](https://support.idrsolutions.com/jpedal/tutorials/pdf-manipulation/optimize-pdf)
