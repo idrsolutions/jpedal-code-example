@@ -19,6 +19,10 @@ Method in JPedalExamples.java: `extractImagesFromPDF();`<br />
 Method in JPedalExamples.java: `extractClippedImagesFromPDF();`<br />
 [Extract Clipped Images from PDF](https://support.idrsolutions.com/jpedal/tutorials/extract-images/extract-clipped-images-from-pdf)
 
+## Extract Embedded Files
+Method in JPedalExamples.java: `extractEmbeddedFiles();`<br />
+[Extract embedded files from a PDF](https://support.idrsolutions.com/jpedal/tutorials/pdf-manipulation/extract-embedded-files-from-pdf)
+
 ## PDF Viewer
 Method in JPedalExamples.java: `openPdfViewer();`<br />
 [Access PDF Viewer from Java](https://support.idrsolutions.com/jpedal/tutorials/viewer/access-pdf-viewer-features-from-your-code)

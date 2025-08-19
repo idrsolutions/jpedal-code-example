@@ -1,5 +1,6 @@
 import org.jpedal.examples.JPedal;
 import org.jpedal.examples.PdfUtilities;
+import org.jpedal.examples.acroform.ExtractEmbeddedFiles;
 import org.jpedal.examples.images.ConvertPagesToImages;
 import org.jpedal.examples.images.ExtractClippedImages;
 import org.jpedal.examples.images.ExtractImages;
@@ -23,7 +24,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
 
 public final class JpedalExamples {
     private JpedalExamples() {
@@ -31,7 +31,8 @@ public final class JpedalExamples {
 
     public static void main(final String[] args) {
         try {
-            optiimzePdf();
+            extractEmbeddedFiles();
+            // optiimzePdf();
             // splitOnePdf();
             // convertPdfPagesToImages();
             // extractClippedImagesFromPDF();
@@ -293,6 +294,26 @@ public final class JpedalExamples {
             LogWriter.writeLog("Unable to open file.");
         }
 
+        extract.closePDFfile();
+    }
+
+    public static void extractEmbeddedFiles() throws PdfException {
+        // Simple static method to extract embedded files from a PDF
+        final String inputFile = "inputFile.pdf";
+        final String outputFolder = "outputFolder";
+
+        ExtractEmbeddedFiles extract = new ExtractEmbeddedFiles(inputFile);
+
+        //extract.setPassword("password");
+
+        if (extract.openPDFFile()) {
+            if (extract.containsEmbeddedFiles()) {
+                extract.extractEmbeddedFiles(outputFolder);
+            }
+            if (extract.containsFilesAttachments()) {
+                extract.extractFileAttachments(outputFolder);
+            }
+        }
         extract.closePDFfile();
     }
 
