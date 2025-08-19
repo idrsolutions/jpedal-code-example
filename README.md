@@ -37,3 +37,7 @@ Method in JPedalExamples.java: `extractTextFromPages();`<br />
 
 Method in JPedalExamples.java: `extractWordListFromPages();`<br />
 [Extract words on a page from any PDF file](https://support.idrsolutions.com/jpedal/tutorials/extract-text/extract-words-on-a-page-from-any-pdf-file)
+
+## PDF Manipulating
+Method in JPedalExamples.java: `splitOnePdf();`<br />
+[Split pages from PDF](https://support.idrsolutions.com/jpedal/tutorials/pdf-manipulation/split-pages-from-pdf)
