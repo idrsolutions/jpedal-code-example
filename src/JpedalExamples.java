@@ -32,7 +32,7 @@ public final class JpedalExamples {
     public static void main(final String[] args) {
         try {
             extractEmbeddedFiles();
-            // optiimzePdf();
+            // optimizePdf();
             // splitOnePdf();
             // convertPdfPagesToImages();
             // extractClippedImagesFromPDF();
@@ -329,7 +329,7 @@ public final class JpedalExamples {
         PdfManipulator.splitInHalf(new File(inputFile), new File(outputFolder), pageToSplitAt);
     }
 
-    public static void optiimzePdf() throws IOException {
+    public static void optimizePdf() throws IOException {
         // Simple static method to optimize a PDF file with all default optimizations
 
         final String inputFile = "inputFile.pdf";
