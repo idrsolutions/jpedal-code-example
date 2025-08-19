@@ -16,6 +16,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -288,5 +290,46 @@ public final class JpedalExamples {
         }
         
         extract.closePDFfile();
+    }
+
+    public static void extractEmbeddedFiles() throws PdfException {
+        // Simple static method to extract embedded files from a PDF
+        final String inputFile = "inputFile.pdf";
+        final String outputFolder = "outputFolder";
+
+        ExtractEmbeddedFiles extract = new ExtractEmbeddedFiles(inputFile);
+
+        //extract.setPassword("password");
+
+        if (extract.openPDFFile()) {
+            if (extract.containsEmbeddedFiles()) {
+                extract.extractEmbeddedFiles(outputFolder);
+            }
+            if (extract.containsFilesAttachments()) {
+                extract.extractFileAttachments(outputFolder);
+            }
+        }
+        extract.closePDFfile();
+    }
+
+    public static void splitOnePdf() throws IOException {
+        // Simple static method to split a pdf file
+        // The first file contains pages 1-pageToSplitAt inclusive, the second contains all other pages
+        // The original file is left untouched by this process.
+
+        final int pageToSplitAt = 3; // Example to split the pdf at page 3
+        final String inputFile = "inputFile.pdf";
+        final String outputFolder = "outputFolder";
+
+        PdfManipulator.splitInHalf(new File(inputFile), new File(outputFolder), pageToSplitAt);
+    }
+
+    public static void optimizePdf() throws IOException {
+        // Simple static method to optimize a PDF file with all default optimizations
+
+        final String inputFile = "inputFile.pdf";
+        final String outputFile = "outputFile.pdf";
+
+        PdfOptimizer.optimizePDF(new File(inputFile), new File(outputFile));
     }
 }
