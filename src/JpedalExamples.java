@@ -8,6 +8,7 @@ import org.jpedal.examples.text.ExtractTextAsWordlist;
 import org.jpedal.examples.text.ExtractTextInRectangle;
 import org.jpedal.examples.viewer.Viewer;
 import org.jpedal.exception.PdfException;
+import org.jpedal.manipulator.PdfManipulator;
 import org.jpedal.parser.DecoderOptions;
 import org.jpedal.utils.LogWriter;
 
@@ -16,6 +17,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +30,8 @@ public final class JpedalExamples {
 
     public static void main(final String[] args) {
         try {
-            convertPdfPagesToImages();
+            splitOnePdf();
+            // convertPdfPagesToImages();
             // extractClippedImagesFromPDF();
             // extractImagesFromPDF();
             // openPdfViewer();
@@ -74,7 +78,7 @@ public final class JpedalExamples {
             for (int page = 1; page <= pageCount; page++) {
                 wordList = extract.getWordsOnPage(page);
             }
-            
+
             // Do something with wordList here
             wordList.forEach(System.out::println);
         } else {
@@ -106,13 +110,13 @@ public final class JpedalExamples {
             for (int page = 1; page <= pageCount; page++) {
                 text.append(extract.getTextOnPage(page)).append('\n');
             }
-            
+
             // Do something with wordList here
             System.out.println(text);
         } else {
             LogWriter.writeLog("Unable to open file.");
         }
-        
+
         extract.closePDFfile();
     }
 
@@ -137,7 +141,7 @@ public final class JpedalExamples {
                 final int imageCount = extract.getImageCount(page);
                 for (int image = 1; image <= imageCount; image++) {
                     final BufferedImage imageFromPage = extract.getImage(page, image, outputImageAsDisplayedOnPage);
-                    
+
                     // Do something with wordList here
                 }
             }
@@ -169,7 +173,7 @@ public final class JpedalExamples {
                 final int imageCount = extract.getImageCount(page);
                 for (int image = 1; image <= imageCount; image++) {
                     final BufferedImage clippledImage = extract.getClippedImage(page, image);
-                    
+
                     // Do something with wordList here
                 }
             }
@@ -201,7 +205,7 @@ public final class JpedalExamples {
             final int pageCount = convert.getPageCount();
             for (int page = 1; page <= pageCount; page++) {
                 final BufferedImage image = convert.getPageAsImage(page);
-                
+
                 // Do something with image here
             }
             convert.closePDFfile();
@@ -280,13 +284,25 @@ public final class JpedalExamples {
                         break;
                 }
             }
-            
+
             // Do something with wordList here
             System.out.println(text);
         } else {
             LogWriter.writeLog("Unable to open file.");
         }
-        
+
         extract.closePDFfile();
+    }
+
+    public static void splitOnePdf() throws IOException {
+        // Simple static method to split a pdf file
+        // The first file contains pages 1-pageToSplitAt inclusive, the second contains all other pages
+        // The original file is left untouched by this process.
+
+        final int pageToSplitAt = 3; // Example to split the pdf at page 3
+        final String inputFile = "inputFile.pdf";
+        final String outputFolder = "outputFolder";
+
+        PdfManipulator.splitInHalf(new File(inputFile), new File(outputFolder), pageToSplitAt);
     }
 }
